@@ -35,11 +35,9 @@
       animation: shimmer 1.5s linear infinite forwards;
     }
 
-    /* ─── LAYOUT ─── */
     #app { position: fixed; inset: 0; z-index: 1; display: flex; flex-direction: column; pointer-events: none; }
     #app > * { pointer-events: auto; }
 
-    /* ─── TOP BAR ─── */
     #top-bar {
       position: absolute; top: 0; left: 0; right: 0;
       display: flex; align-items: center; justify-content: center;
@@ -57,7 +55,6 @@
     #clock-display .time-sec { color: #ff8700; }
     #clock-display .divider { opacity: 0.3; }
 
-    /* ─── SIDEBAR ─── */
     #sidebar {
       position: absolute; left: 20px; top: 50%;
       transform: translateY(-50%);
@@ -112,7 +109,6 @@
 
 
 
-    /* ─── HERO CENTER ─── */
     #hero {
       position: absolute; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
@@ -134,8 +130,6 @@
     }
 
 
-
-    /* ─── USER AREA (top-right in bottom bar) ─── */
     #user-pill {
       position: absolute; top: 18px; right: 24px;
       display: flex; align-items: center; gap: 8px;
@@ -173,7 +167,6 @@
     .user-stats .lvl { color: rgba(255,255,255,0.4); font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; }
     .user-stats .time { color: white; font-size: 12px; font-weight: 600; font-family: 'DM Mono', monospace; }
 
-    /* ─── GAME PANEL (slides in from left on "Play") ─── */
     #game-panel {
       position: absolute; top: 0; left: 0; bottom: 0;
       width: 360px; z-index: 20;
@@ -269,7 +262,6 @@
     }
     .badge-pro { background: rgba(255,135,0,0.2); color: #ff8700; border: 1px solid rgba(255,135,0,0.3); }
 
-    /* ─── GAME MODAL ─── */
     #game-modal {
       display: none; position: fixed; inset: 0; z-index: 100;
     }
@@ -289,7 +281,6 @@
     }
     #modal-content { display: flex; flex-direction: column; gap: 16px; }
 
-    /* ─── LOGIN MODAL ─── */
     #login-modal {
       display: none; position: fixed; inset: 0; z-index: 200;
     }
@@ -317,12 +308,10 @@
     .login-input:focus { border-color: rgba(255,135,0,0.5); }
     .login-input option { background: #0e0b07; }
 
-    /* ─── QUEUE MODAL ─── */
     #queue-modal {
       display: none; position: fixed; inset: 0; z-index: 300;
     }
 
-    /* ─── RECENT PANEL (top of game panel) ─── */
     #recent-strip {
       padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.05);
       display: none;
@@ -347,7 +336,6 @@
       margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
-    /* ─── SERVER SELECT ─── */
     #server-nav-wrap {
       padding: 8px 12px 4px;
     }
@@ -359,7 +347,6 @@
     }
     .server-select-mini option { background: #0e0b07; }
 
-    /* ─── PANEL OVERLAY MASK ─── */
     #panel-mask {
       display: none; position: absolute; inset: 0; z-index: 19;
     }
@@ -368,13 +355,10 @@
 </head>
 <body oncontextmenu="return false;">
 
-<!-- ═══════════════════════════════════ UI SHELL ═══════════════════════════════════ -->
 <div id="app">
 
-  <!-- USER PILL top right -->
   <div id="user-pill"></div>
 
-  <!-- LEFT SIDEBAR NAV -->
   <nav id="sidebar">
     <div class="nav-item active" onclick="App.openGamePanel()">
       <i data-lucide="gamepad-2" class="nav-item-icon"></i>
@@ -382,7 +366,6 @@
     </div>
   </nav>
 
-  <!-- HERO CENTER -->
   <div id="hero">
     <div id="logo-wrap">
       <img id="logo-img" src="run-site/images/favicon.png" onerror="this.style.display='none'" alt="Synapse">
@@ -391,10 +374,8 @@
     <div id="hero-sub">join the discord server for link drops!</div>
   </div>
 
-  <!-- PANEL BACKDROP MASK -->
   <div id="panel-mask" onclick="App.closeGamePanel()"></div>
 
-  <!-- GAME PANEL (slides in) -->
   <div id="game-panel">
     <div id="game-panel-header">
       <i data-lucide="gamepad-2" style="width:16px;height:16px;color:#ff8700;"></i>
@@ -415,28 +396,23 @@
       </div>
     </div>
 
-    <!-- Recent games strip -->
     <div id="recent-strip">
       <h3><i data-lucide="history" style="width:11px;height:11px;"></i> Recently Played</h3>
       <div id="recent-thumbs"></div>
     </div>
 
-    <!-- Search -->
     <div id="panel-search-wrap">
       <i data-lucide="search" id="panel-search-icon"></i>
       <input type="text" id="panel-search" placeholder="Search games..." oninput="App.handleSearch(this.value)">
     </div>
 
-    <!-- Categories -->
     <div id="category-pills"></div>
 
-    <!-- Game list -->
     <div id="game-list">
       <div id="game-list-inner" style="display:flex;flex-direction:column;gap:4px;"></div>
     </div>
   </div>
 
-  <!-- GAME DETAIL MODAL -->
   <div id="game-modal">
     <div id="modal-backdrop" onclick="App.closeModal()"></div>
     <div id="modal-box">
@@ -444,7 +420,6 @@
     </div>
   </div>
 
-  <!-- LOGIN MODAL -->
   <div id="login-modal">
     <div class="modal-backdrop2" onclick="App.closeLoginModal()"></div>
     <div class="login-box">
@@ -475,7 +450,6 @@
     </div>
   </div>
 
-  <!-- QUEUE MODAL -->
   <div id="queue-modal">
     <div style="position:absolute;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);"></div>
     <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#0e0b07;width:90%;max-width:360px;padding:36px 28px;border-radius:20px;border:1px solid rgba(255,255,255,0.08);text-align:center;">
@@ -497,11 +471,9 @@
   </div>
 
 </div>
-<!-- ═══════════════════════════════════════════════════════════════════════════════ -->
 
 
 <script>
-// ─── APP ──────────────────────────────────────────────────────────────────────
 const API_LIST = ["https://api.cloudmoon.cloudbatata.com","https://api.prod.cloudmoonapp.com","https://api.prod.geometry.today"];
 const BACKUP_API_LIST = ["https://hrz5zfjq02.execute-api.us-east-1.amazonaws.com","https://api.prod.viewoncloud.com"];
 
