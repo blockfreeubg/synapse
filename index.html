@@ -105,9 +105,76 @@
     .badge-soon { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.35); }
     .badge-online { background: rgba(34,197,94,0.12); color: #4ade80; animation: pulse-badge 2.5s infinite; }
 
-
-
-
+    #friends-modal {
+      display: none; position: fixed; inset: 0; z-index: 250;
+    }
+    .friend-code-box {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,135,0,0.08); border: 1px solid rgba(255,135,0,0.25);
+      border-radius: 10px; padding: 10px 14px; margin-bottom: 4px;
+    }
+    .friend-code-box .code-text {
+      flex: 1; font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 600;
+      color: #ff8700; letter-spacing: 0.08em;
+    }
+    .copy-code-btn {
+      width: 30px; height: 30px; border-radius: 7px;
+      background: rgba(255,135,0,0.15); border: 1px solid rgba(255,135,0,0.3);
+      color: #ff8700; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; flex-shrink: 0; transition: all 0.15s;
+    }
+    .copy-code-btn:hover { background: rgba(255,135,0,0.25); }
+    .add-friend-row { display: flex; gap: 8px; }
+    .add-friend-row input {
+      flex: 1; height: 40px; padding: 0 14px;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; color: white; font-size: 13px; outline: none;
+      font-family: 'DM Mono', monospace; letter-spacing: 0.05em;
+      transition: border-color 0.15s;
+    }
+    .add-friend-row input:focus { border-color: rgba(255,135,0,0.5); }
+    .add-friend-row button {
+      height: 40px; padding: 0 16px; border-radius: 10px;
+      background: #ff8700; color: white; font-size: 12px; font-weight: 700;
+      border: none; cursor: pointer; white-space: nowrap;
+      font-family: 'Space Grotesk', sans-serif; transition: background 0.15s;
+    }
+    .add-friend-row button:hover { background: #e87900; }
+    .add-friend-row button:disabled { opacity: 0.5; cursor: not-allowed; }
+    #friends-list-wrap {
+      max-height: 260px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px;
+    }
+    .friend-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border-radius: 10px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+    }
+    .friend-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: linear-gradient(135deg, #ff8700, #ff3b00);
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 700; font-size: 13px; flex-shrink: 0;
+    }
+    .friend-row-info { flex: 1; min-width: 0; }
+    .friend-row-code {
+      font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.85);
+      font-family: 'DM Mono', monospace; letter-spacing: 0.05em;
+    }
+    .friend-row-added { font-size: 10px; color: rgba(255,255,255,0.3); margin-top: 2px; }
+    .remove-friend-btn {
+      width: 26px; height: 26px; border-radius: 6px;
+      background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25);
+      color: rgba(239,68,68,0.8); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; flex-shrink: 0; transition: all 0.15s;
+    }
+    .remove-friend-btn:hover { background: rgba(239,68,68,0.2); }
+    .friends-empty {
+      text-align: center; color: rgba(255,255,255,0.2); font-size: 12px; padding: 24px 0;
+    }
+    .friends-section-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.3); margin: 4px 0 8px;
+    }
 
     #hero {
       position: absolute; top: 50%; left: 50%;
@@ -262,6 +329,25 @@
     }
     .badge-pro { background: rgba(255,135,0,0.2); color: #ff8700; border: 1px solid rgba(255,135,0,0.3); }
 
+    .fav-star-btn {
+      width: 28px; height: 28px; border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; cursor: pointer; transition: all 0.15s;
+      background: transparent; border: 1px solid transparent;
+      color: rgba(255,255,255,0.25);
+    }
+    .fav-star-btn:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
+    .fav-star-btn.is-fav { color: #ff8700; }
+    .fav-star-btn.is-fav svg { fill: #ff8700; }
+    .fav-star-btn svg { width: 15px; height: 15px; pointer-events: none; }
+
+    .game-list-section-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.25); padding: 8px 10px 4px;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .game-list-section-label svg { width: 11px; height: 11px; color: #ff8700; }
+
     #game-modal {
       display: none; position: fixed; inset: 0; z-index: 100;
     }
@@ -364,6 +450,10 @@
       <i data-lucide="gamepad-2" class="nav-item-icon"></i>
       <span class="nav-item-label">Play</span>
     </div>
+    <div class="nav-item" onclick="App.openFriendsModal()" id="nav-friends">
+      <i data-lucide="users" class="nav-item-icon"></i>
+      <span class="nav-item-label">Friends</span>
+    </div>
   </nav>
 
   <div id="hero">
@@ -447,6 +537,35 @@
           Sign In
         </button>
       </div>
+    </div>
+  </div>
+
+  <div id="friends-modal">
+    <div class="modal-backdrop2" onclick="App.closeFriendsModal()"></div>
+    <div class="login-box" style="max-width:400px;">
+      <div style="display:flex;align-items:center;margin-bottom:20px;">
+        <h2 style="font-size:20px;font-weight:700;color:white;">Friends</h2>
+        <div onclick="App.closeFriendsModal()" style="margin-left:auto;padding:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;cursor:pointer;color:rgba(255,255,255,0.5);display:flex;">
+          <i data-lucide="x" style="width:14px;height:14px;"></i>
+        </div>
+      </div>
+
+      <div class="friends-section-label">Your Friend Code</div>
+      <div class="friend-code-box">
+        <span class="code-text" id="my-friend-code">------</span>
+        <div class="copy-code-btn" onclick="App.copyFriendCode(event)">
+          <i data-lucide="copy" style="width:14px;height:14px;"></i>
+        </div>
+      </div>
+
+      <div class="friends-section-label" style="margin-top:16px;">Add a Friend</div>
+      <div class="add-friend-row">
+        <input type="text" id="add-friend-input" placeholder="Enter friend code" maxlength="8" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter') App.addFriend();">
+        <button id="add-friend-btn" onclick="App.addFriend()">Add</button>
+      </div>
+
+      <div class="friends-section-label" style="margin-top:18px;">Your Friends</div>
+      <div id="friends-list-wrap"></div>
     </div>
   </div>
 
@@ -671,13 +790,43 @@ window.App = {
     this.searchTimer = setTimeout(() => this.applyFilter(), 120);
   },
 
+  getFavorites() {
+    try { return JSON.parse(localStorage.getItem("cm_favorite_games") || "[]"); }
+    catch(e) { return []; }
+  },
+
+  saveFavorites(list) {
+    localStorage.setItem("cm_favorite_games", JSON.stringify(list));
+  },
+
+  isFavorite(id) {
+    return this.getFavorites().includes(id);
+  },
+
+  toggleFavorite(id, evt) {
+    if (evt) evt.stopPropagation();
+    let favs = this.getFavorites();
+    if (favs.includes(id)) favs = favs.filter(f => f !== id);
+    else favs.unshift(id);
+    this.saveFavorites(favs);
+    this.lastRenderedKey = '';
+    this.applyFilter();
+  },
+
   applyFilter() {
+    const favs = this.getFavorites();
     this.filteredGames = this.rawGames.filter(g => {
       if (g.status !== 1) return false;
       if (g.isHigh && this.userLevel !== 3) return false;
       const catMatch = this.activeCategory === "all" || g.categories.includes(this.activeCategory) || g.categories.includes(parseInt(this.activeCategory));
       const searchMatch = g.title.toLowerCase().includes(this.searchQuery);
       return catMatch && searchMatch;
+    }).sort((a, b) => {
+      const aFav = favs.includes(a.id), bFav = favs.includes(b.id);
+      if (aFav && !bFav) return -1;
+      if (!aFav && bFav) return 1;
+      if (aFav && bFav) return favs.indexOf(a.id) - favs.indexOf(b.id);
+      return 0;
     });
     this.renderList();
   },
@@ -685,23 +834,41 @@ window.App = {
   renderList() {
     const inner = document.getElementById('game-list-inner');
     if (!inner) return;
-    const key = this.filteredGames.map(g => g.id).join(',');
+    const favs = this.getFavorites();
+    const key = this.filteredGames.map(g => g.id + (favs.includes(g.id) ? '*' : '')).join(',');
     if (this.lastRenderedKey === key) return;
     this.lastRenderedKey = key;
     if (!this.filteredGames.length) {
       inner.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.2);padding:40px 0;font-size:13px;">No games found.</div>';
       return;
     }
-    inner.innerHTML = this.filteredGames.map(g =>
-      `<div class="game-row" onclick="App.showGameDetails('${g.id}')">
+    const favCount = this.filteredGames.filter(g => favs.includes(g.id)).length;
+    let html = '';
+    if (favCount > 0) {
+      html += `<div class="game-list-section-label"><i data-lucide="star"></i> Favorites</div>`;
+      html += this.filteredGames.slice(0, favCount).map(g => this.renderGameRow(g, favs)).join('');
+      html += `<div class="game-list-section-label">All Games</div>`;
+      html += this.filteredGames.slice(favCount).map(g => this.renderGameRow(g, favs)).join('');
+    } else {
+      html = this.filteredGames.map(g => this.renderGameRow(g, favs)).join('');
+    }
+    inner.innerHTML = html;
+    lucide.createIcons();
+  },
+
+  renderGameRow(g, favs) {
+    const fav = favs.includes(g.id);
+    return `<div class="game-row" onclick="App.showGameDetails('${g.id}')">
         <img src="${g.icon}" class="game-thumb" onerror="this.src='https://cloudmoonapp.com/favicon.ico'">
         <div class="game-row-info">
           <div class="game-row-title">${g.title}</div>
           <div class="game-row-sub">Cloud Play</div>
         </div>
         ${g.isHigh ? '<span class="game-row-badge badge-pro">Pro</span>' : ''}
-      </div>`
-    ).join('');
+        <div class="fav-star-btn${fav ? ' is-fav' : ''}" onclick="App.toggleFavorite('${g.id}', event)" title="${fav ? 'Remove favorite' : 'Add favorite'}">
+          <i data-lucide="star"></i>
+        </div>
+      </div>`;
   },
 
   async loadRecentGames() {
@@ -768,6 +935,9 @@ window.App = {
                 ${d.is_high ? '<span style="background:rgba(255,135,0,0.15);color:#ff8700;font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;border:1px solid rgba(255,135,0,0.3);text-transform:uppercase;letter-spacing:0.1em;">PRO</span>' : ''}
                 ${d.status === 4 ? '<span style="background:rgba(239,68,68,0.15);color:rgba(239,68,68,0.8);font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;border:1px solid rgba(239,68,68,0.3);text-transform:uppercase;letter-spacing:0.1em;">Maintenance</span>' : ''}
               </div>
+            </div>
+            <div onclick="App.toggleFavorite('${d.package_name}', event); App.showGameDetails('${d.package_name}');" style="padding:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;cursor:pointer;color:${this.isFavorite(d.package_name) ? '#ff8700' : 'rgba(255,255,255,0.5)'};display:flex;margin:-4px -4px 0 0;">
+              <i data-lucide="star" style="width:14px;height:14px;${this.isFavorite(d.package_name) ? 'fill:#ff8700;' : ''}"></i>
             </div>
             <button onclick="App.closeModal()" style="padding:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;cursor:pointer;color:rgba(255,255,255,0.5);display:flex;margin:-4px -4px 0 0;">
               <i data-lucide="x" style="width:14px;height:14px;"></i>
@@ -892,6 +1062,109 @@ window.App = {
   launchGameAction(sid) {
     localStorage.setItem("cm_launch_data", JSON.stringify({ sid, quality: 'SD', timestamp: Date.now() }));
     window.location.assign("./play-260430.html");
+  },
+
+  getMyFriendCode() {
+    let code = localStorage.getItem("cm_friend_code");
+    if (!code) {
+      code = this.generateFriendCode();
+      localStorage.setItem("cm_friend_code", code);
+    }
+    return code;
+  },
+
+  generateFriendCode() {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // no one touch ts pls it bugs out when special characters are der
+    let out = "";
+    for (let i = 0; i < 6; i++) out += chars[Math.floor(Math.random() * chars.length)];
+    return out;
+  },
+
+  getFriends() {
+    try { return JSON.parse(localStorage.getItem("cm_friends") || "[]"); }
+    catch(e) { return []; }
+  },
+
+  saveFriends(list) {
+    localStorage.setItem("cm_friends", JSON.stringify(list));
+  },
+
+  openFriendsModal() {
+    if (!this.token) {
+      if (window.confirm("You need to be signed in to use friends. Sign in now?")) this.showLogin();
+      return;
+    }
+    document.getElementById('friends-modal').style.display = 'block';
+    document.getElementById('my-friend-code').textContent = this.getMyFriendCode();
+    const input = document.getElementById('add-friend-input');
+    if (input) input.value = '';
+    this.renderFriends();
+    lucide.createIcons();
+  },
+
+  closeFriendsModal() {
+    document.getElementById('friends-modal').style.display = 'none';
+  },
+
+  copyFriendCode(evt) {
+    const code = this.getMyFriendCode();
+    if (navigator.clipboard) navigator.clipboard.writeText(code).catch(() => {});
+    const btn = evt && evt.currentTarget;
+    if (btn) {
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<i data-lucide="check" style="width:14px;height:14px;"></i>';
+      lucide.createIcons();
+      setTimeout(() => { btn.innerHTML = orig; lucide.createIcons(); }, 1200);
+    }
+  },
+
+  addFriend() {
+    if (!this.token) {
+      this.closeFriendsModal();
+      if (window.confirm("Sign in required. Sign in now?")) this.showLogin();
+      return;
+    }
+    const input = document.getElementById('add-friend-input');
+    const code = input.value.trim().toUpperCase();
+    if (!code) return;
+    const myCode = this.getMyFriendCode();
+    if (code === myCode) { alert("You can't add yourself."); return; }
+    const friends = this.getFriends();
+    if (friends.some(f => f.code === code)) { alert("Already friends with this code."); return; }
+    friends.unshift({ code, addedAt: Date.now() });
+    this.saveFriends(friends);
+    input.value = '';
+    this.renderFriends();
+  },
+
+  removeFriend(code) {
+    if (!window.confirm("Remove this friend?")) return;
+    const friends = this.getFriends().filter(f => f.code !== code);
+    this.saveFriends(friends);
+    this.renderFriends();
+  },
+
+  renderFriends() {
+    const wrap = document.getElementById('friends-list-wrap');
+    if (!wrap) return;
+    const friends = this.getFriends();
+    if (!friends.length) {
+      wrap.innerHTML = '<div class="friends-empty">No friends yet. Share your code above!</div>';
+      return;
+    }
+    wrap.innerHTML = friends.map(f => `
+      <div class="friend-row">
+        <div class="friend-avatar">${f.code.slice(0,2)}</div>
+        <div class="friend-row-info">
+          <div class="friend-row-code">${f.code}</div>
+          <div class="friend-row-added">Added ${new Date(f.addedAt).toLocaleDateString()}</div>
+        </div>
+        <div class="remove-friend-btn" onclick="App.removeFriend('${f.code}')">
+          <i data-lucide="x" style="width:12px;height:12px;"></i>
+        </div>
+      </div>
+    `).join('');
+    lucide.createIcons();
   }
 };
 
